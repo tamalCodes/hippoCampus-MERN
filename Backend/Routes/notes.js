@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  console.log("HELLO BOI FROM AUTH");
+  console.log("HELLO BOI FROM NOTES");
 });
 
 module.exports = router;
