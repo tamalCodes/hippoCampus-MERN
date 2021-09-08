@@ -12,7 +12,7 @@ const userSchema = new Schema({
   },
   email: {
     type: String,
-    // required: true,
+    required: true,
     unique: true,
   },
   date: {
@@ -21,5 +21,4 @@ const userSchema = new Schema({
   },
 });
 const user = mongoose.model("user", userSchema);
-user.createIndexes();
 module.exports = user;

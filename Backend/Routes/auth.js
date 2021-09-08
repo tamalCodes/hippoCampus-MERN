@@ -6,7 +6,7 @@ const { body, validationResult } = require("express-validator");
 //making a user and saving the data in local mongodb date base
 
 router.post(
-  "/",
+  "/createUser",
   [
     // username must be greater than 3
     body("name").isLength({ min: 3 }),
@@ -17,16 +17,27 @@ router.post(
     //email must be a proper email
     body("email").isEmail(),
   ],
-  (req, res) => {
+  async (req, res) => {
+    //if there are errors return bad requests
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    User.create({
+
+    //check if the user already exsists or not
+
+    let user = User.findOne({ email: req.body.email });
+
+    if (user) {
+      return res.json({ error: "You already have an account !!" });
+    }
+    user = await User.create({
       name: req.body.name,
       password: req.body.password,
       email: req.body.email,
-    }).then((user) => res.json(user));
+    });
+    // .then((user) => res.json(user));
   }
 );
 
