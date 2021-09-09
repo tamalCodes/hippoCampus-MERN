@@ -7,8 +7,10 @@ const jwt = require("jsonwebtoken");
 
 //secret is used to sign a jwt token
 const secret = "Tamalisagood$oy";
+
 //making a user and saving the data in local mongodb date base
 
+//--------------------------------------------------------user creation-------------------------------------------------------------------------
 router.post(
   "/createUser",
   [
@@ -75,6 +77,63 @@ router.post(
     }
 
     // .then((user) => res.json(user));
+  }
+);
+
+//--------------------------------------------------------user login-------------------------------------------------------------------------
+
+router.post(
+  "/loginUser",
+  [
+    //email must be a proper email and passwords should exsist
+    body("email").isEmail(),
+    body("password").exists(),
+  ],
+  async (req, res) => {
+    //if there are errors return bad requests
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+      });
+    }
+
+    //if there are no such errors we acces the original email and password that was once given by the user
+    //and check it to confirm our login
+    const { email, password } = req.body;
+    try {
+      //here we are storing the original email and password in variable "user"
+      let user = await User.findOne({ email });
+
+      //if user doesnot exists
+      if (!user) {
+        return res
+          .status(400)
+          .json({ error: "Please try to login with correct credentials" });
+      }
+
+      //next we compare the given password with original user.password
+      const passwordCompare = await bcrypt.compare(password, user.password);
+      if (!passwordCompare) {
+        return res
+          .status(400)
+          .json({ error: "Please try to login with correct credentials" });
+      }
+
+      //the id here is basically the user id all the way from mongo db
+      const data = {
+        user: {
+          id: user.id,
+        },
+      };
+
+      //signing the authorization token so that it cannot be tampered with
+      const authtoken = jwt.sign(data, secret);
+      res.json({ authtoken });
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).send("ERROR OCCURED!!");
+    }
   }
 );
 
