@@ -4,6 +4,7 @@ const User = require("../Models/User");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const fetchUser = require("../Middleware/fetchUser");
 
 //secret is used to sign a jwt token
 const secret = "Tamalisagood$oy";
@@ -80,7 +81,7 @@ router.post(
   }
 );
 
-//--------------------------------------------------------user login-------------------------------------------------------------------------
+//--------------------------------------------------------user login-----------------------------------------------------------------------------------------------
 
 router.post(
   "/loginUser",
@@ -136,5 +137,18 @@ router.post(
     }
   }
 );
+
+//--------------------------------------------------------user details---------------------------------------------------------------------------------------
+
+router.post("/getUser", fetchUser, async (req, res) => {
+  try {
+    const userID = req.user.id;
+    const user = await User.findById(userID).select("-password");
+    res.send(user);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("ERROR OCCURED!!");
+  }
+});
 
 module.exports = router;
