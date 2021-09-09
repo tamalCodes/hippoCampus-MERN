@@ -3,7 +3,10 @@ const router = express.Router();
 const User = require("../Models/User");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
+//secret is used to sign a jwt token
+const secret = "Tamalisagood$oy";
 //making a user and saving the data in local mongodb date base
 
 router.post(
@@ -54,6 +57,18 @@ router.post(
         password: secPass,
         email: req.body.email,
       });
+
+      //the id here is basically the user id all the way from mongo db
+      const data = {
+        user: {
+          id: user.id,
+        },
+      };
+
+      //signing the authorization token so that it cannot be tampered with
+      const authtoken = jwt.sign(data, secret);
+
+      res.json({ authtoken });
     } catch (error) {
       console.log(error.message);
       res.status(500).send("ERROR OCCURED!!");
