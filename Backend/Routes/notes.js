@@ -4,16 +4,21 @@ const Notes = require("../Models/Notes");
 const fetchUser = require("../Middleware/fetchUser");
 const { body, validationResult } = require("express-validator");
 
-//``````````````````````````````````````````````Get all the notes````````````````````````````````````````````````
+//``````````````````````````````````````````````Get all the notes````````````````````````````````````````````````````````
 //we will be using GET since we need the JWT token from the header
 
 router.get("/fetchallnotes", fetchUser, async (req, res) => {
   //we will actually get the user details thanks to the middleware !!
-  const notes = await Notes.find({ user: req.user.id });
-  res.json(notes);
+  try {
+    const notes = await Notes.find({ user: req.user.id });
+    res.json(notes);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("ERROR OCCURED!!");
+  }
 });
 
-//``````````````````````````````````````````````Add notes````````````````````````````````````````````````
+//``````````````````````````````````````````````Add notes`````````````````````````````````````````````````````````````````
 //we will be using post method to add notes
 
 router.post(
@@ -31,18 +36,25 @@ router.post(
     }),
   ],
   async (req, res) => {
-    const { title, description, tag } = req.body;
-    //if there are errors return bad requests
+    try {
+      const { title, description, tag } = req.body;
+      //if there are errors return bad requests
 
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({
-        errors: errors.array(),
-      });
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          errors: errors.array(),
+        });
+      }
+
+      //if there are no errors here:
+      const note = new Notes({ title, description, tag, user: req.user.id });
+      const savedNote = await note.save();
+      res.json(savedNote);
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).send("ERROR OCCURED!!");
     }
-
-    //if there are no errors here:
-    const note = new Note({});
   }
 );
 
