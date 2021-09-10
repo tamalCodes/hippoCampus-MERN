@@ -83,27 +83,33 @@ router.put("/updatenote/:id", fetchUser, async (req, res) => {
   //get the title des and tag of the note that you want to update and then update it
   const { title, description, tag } = req.body;
 
-  const newNote = {};
-  if (title) { newNote.title = title };
-  if (description) { newNote.description = description };
-  if (tag) { newNote.tag = tag };
+  try {
+    const newNote = {};
+    if (title) { newNote.title = title };
+    if (description) { newNote.description = description };
+    if (tag) { newNote.tag = tag };
 
 
-  //Find the note to be updated and update it
-  let note = await Notes.findById(req.params.id);
+    //Find the note to be updated and update it
+    let note = await Notes.findById(req.params.id);
 
-  //if note doesnt exist
-  if (!note) { return res.status(404).send("NOT FOUND") };
-
-
-  //if id doesnot match, means the person trying to tamper
-  if (note.user.toString() !== req.user.id) { return res.status(401).send("NOT ALLOWED") };
+    //if note doesnt exist
+    if (!note) { return res.status(404).send("NOT FOUND") };
 
 
-  //if everything is okay then
-  note = await Notes.findByIdAndUpdate(req.params.id, { $set: newNote }, { new: true });
-  res.json({ note });
+    //if id doesnot match, means the person trying to tamper
+    if (note.user.toString() !== req.user.id) { return res.status(401).send("NOT ALLOWED") };
 
+
+    //if everything is okay then
+    note = await Notes.findByIdAndUpdate(req.params.id, { $set: newNote }, { new: true });
+    res.json({ note });
+
+  }
+  catch (error) {
+    console.log(error.message);
+    res.status(500).send("ERROR OCCURED!!");
+  }
 
 });
 
@@ -121,23 +127,29 @@ router.delete("/deletenote/:id", fetchUser, async (req, res) => {
   //get the title des and tag of the note that you want to delete
   const { title, description, tag } = req.body;
 
+  try {
+    //Find the note to be updated so that you can delete it
+    let note = await Notes.findById(req.params.id);
+
+    //if note doesnt exist
+    if (!note) { return res.status(404).send("NOT FOUND") };
+
+
+    //if id doesnot match, means the person trying to delete someone else's note
+    if (note.user.toString() !== req.user.id) { return res.status(401).send("NOT ALLOWED") };
+
+
+    //if everything is okay then
+    note = await Notes.findByIdAndDelete(req.params.id);
+    res.json({ "Success": "Note was deleted !!" });
+  }
+  catch (error) {
+    console.log(error.message);
+    res.status(500).send("ERROR OCCURED!!");
+  }
 
 
 
-  //Find the note to be updated so that you can delete it
-  let note = await Notes.findById(req.params.id);
-
-  //if note doesnt exist
-  if (!note) { return res.status(404).send("NOT FOUND") };
-
-
-  //if id doesnot match, means the person trying to delete someone else's note
-  if (note.user.toString() !== req.user.id) { return res.status(401).send("NOT ALLOWED") };
-
-
-  //if everything is okay then
-  note = await Notes.findByIdAndDelete(req.params.id);
-  res.json({ "Success": "Note was deleted !!" });
 
 
 });
