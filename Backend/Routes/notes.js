@@ -1,8 +1,49 @@
 const express = require("express");
 const router = express.Router();
+const Notes = require("../Models/Notes");
+const fetchUser = require("../Middleware/fetchUser");
+const { body, validationResult } = require("express-validator");
 
-router.get("/", (req, res) => {
-  console.log("HELLO BOI FROM NOTES");
+//``````````````````````````````````````````````Get all the notes````````````````````````````````````````````````
+//we will be using GET since we need the JWT token from the header
+
+router.get("/fetchallnotes", fetchUser, async (req, res) => {
+  //we will actually get the user details thanks to the middleware !!
+  const notes = await Notes.find({ user: req.user.id });
+  res.json(notes);
 });
+
+//``````````````````````````````````````````````Add notes````````````````````````````````````````````````
+//we will be using post method to add notes
+
+router.post(
+  "/addnote",
+  fetchUser,
+  [
+    // title of the note must be greater than 3
+    body("title", "Enter a valid title").isLength({
+      min: 3,
+    }),
+
+    // description must be greater than 5
+    body("description", "Enter a valid description").isLength({
+      min: 5,
+    }),
+  ],
+  async (req, res) => {
+    const { title, description, tag } = req.body;
+    //if there are errors return bad requests
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+      });
+    }
+
+    //if there are no errors here:
+    const note = new Note({});
+  }
+);
 
 module.exports = router;
