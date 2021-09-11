@@ -1,7 +1,8 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Navbar from './Components/Navbar';
-import NotePage from './Components/NotePage';
+import Home from './Components/Home';
+import Contact from './Components/Contact';
+import About from './Components/About';
 
 
 function App() {
@@ -10,9 +11,17 @@ function App() {
     <Router>
       <div className="app">
         <Switch>
+
           <Route exact path="/">
-            <Navbar></Navbar>
-            <NotePage></NotePage>
+            <Home></Home>
+          </Route>
+
+          <Route exact path="/about">
+            <About></About>
+          </Route>
+
+          <Route exact path="/contact">
+            <Contact></Contact>
           </Route>
 
         </Switch>

@@ -18,6 +18,8 @@
     font-weight: 600;
 }
 
-.nav-item {
-    padding-right: 15px;
+.navbar__link {
+    margin-right: 25px;
+    color: rgba(0, 0, 0, 0.5);
+    text-decoration: none;
 }

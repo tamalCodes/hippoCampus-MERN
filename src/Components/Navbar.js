@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import "../Styles/Navbar.css"
 
 const Navbar = () => {
@@ -24,17 +25,26 @@ const Navbar = () => {
                         {/* <!-- navbar er baaki shob jinish --> */}
                         <div class="collapse navbar-collapse" id="navtoggle">
                             <ul class="navbar-nav ms-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="/"> Home</a>
-                                </li>
 
-                                <li class="nav-item" id="lg">
-                                    <a class="nav-link" href="edu.html"> About </a>
-                                </li>
+                                <Link to="/" className="navbar__link">
+                                    <div className="page__home">
+                                        Home
+                                    </div>
+                                </Link>
 
-                                <li class="nav-item" id="lg">
-                                    <a class="nav-link" href="contact.html"> Contact Me </a>
-                                </li>
+                                <Link to="/about" className="navbar__link">
+                                    <div className="page__about">
+                                        About
+                                    </div>
+                                </Link>
+
+                                <Link to="/contact" className="navbar__link">
+                                    <div className="page__contact">
+                                        Contact
+                                    </div>
+                                </Link>
+
+
                             </ul>
                         </div>
                         {/* <!-- end of navbar --> */}
