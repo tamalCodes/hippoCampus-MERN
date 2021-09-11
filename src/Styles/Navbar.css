@@ -1,0 +1,23 @@
+#Navbarrr {
+    padding-left: 30px;
+    padding-right: 50px;
+    /* background-color: #96BAFF; */
+    margin-bottom: 20px;
+}
+
+
+.navbar {
+    font-size: 1em;
+    font-family: 'ABeeZee', sans-serif;
+}
+
+.navbar__brand {
+    font-size: 25px;
+    font-family: 'Ubuntu', sans-serif;
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: 600;
+}
+
+.nav-item {
+    padding-right: 15px;
+}
