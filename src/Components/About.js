@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import noteContext from '../Context/Notes/NoteContext'
 import Navbar from "./Navbar"
+
 const About = () => {
+
+    const a = useContext(noteContext)
     return (
         <>
             <Navbar></Navbar>
-            Well hello from the about page
+            Well hello from {a.name}
         </>
     )
 }
