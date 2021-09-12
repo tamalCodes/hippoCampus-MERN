@@ -11,23 +11,26 @@ function App() {
     //These are basically routes to different types of pages
     <NoteState>
       <Router>
-        <div className="app">
-          <Switch>
 
-            <Route exact path="/">
-              <Home></Home>
-            </Route>
+        <Switch>
 
-            <Route exact path="/about">
-              <About></About>
-            </Route>
+          {/* path 1 */}
+          <Route exact path="/">
+            <Home></Home>
+          </Route>
 
-            <Route exact path="/contact">
-              <Contact></Contact>
-            </Route>
+          {/* path 2*/}
+          <Route exact path="/about">
+            <About></About>
+          </Route>
 
-          </Switch>
-        </div>
+          {/* path 3 */}
+          <Route exact path="/contact">
+            <Contact></Contact>
+          </Route>
+
+        </Switch>
+
       </Router>
     </NoteState>
   );
