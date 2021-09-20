@@ -15,19 +15,13 @@ function App() {
         <Switch>
 
           {/* path 1 */}
-          <Route exact path="/">
-            <Home></Home>
-          </Route>
+          <Route exact path="/"> <Home /></Route>
 
           {/* path 2*/}
-          <Route exact path="/about">
-            <About></About>
-          </Route>
+          <Route exact path="/about"> <About /></Route>
 
           {/* path 3 */}
-          <Route exact path="/contact">
-            <Contact></Contact>
-          </Route>
+          <Route exact path="/contact" ><Contact /></Route>
 
         </Switch>
 
