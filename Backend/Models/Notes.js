@@ -1,3 +1,5 @@
+// this is the models for saving the notes in the database
+
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 

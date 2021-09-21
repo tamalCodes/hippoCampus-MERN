@@ -1,3 +1,6 @@
+// this is the model to store the user details in the database
+
+
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
