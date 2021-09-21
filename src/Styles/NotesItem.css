@@ -1,0 +1,9 @@
+.card {
+    display: inline-block;
+    margin-right: 25px;
+    margin-top: 30px;
+}
+
+.notes {
+    display: inline-block;
+}

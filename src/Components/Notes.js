@@ -1,6 +1,14 @@
-import React from 'react'
+// this is basically the notes page where all the notes will be visible to you
+// for every single note we are using a NotesItem component
 
+import React from 'react'
+import NotesItem from './NotesItem';
 const Notes = () => {
+
+    // const context = useContext(noteContext);
+    // const { notes, setNotes } = context;
+
+
     return (
         <>
             <div className="container my-3">
@@ -9,31 +17,31 @@ const Notes = () => {
 
                     <div className="accordion-item">
 
-                        <h1 classname="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <h1 className="accordion-header" id="headingTwo">
+                            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                 <h5>Add notes</h5>
                             </button>
                         </h1>
 
-                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                             <div className="accordion-body">
 
                                 <form className="my-3">
 
                                     <div className="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Email address</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-                                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                        <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+                                        <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+                                        <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                                     </div>
 
                                     <div className="mb-3">
-                                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword1" />
+                                        <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+                                        <input type="password" className="form-control" id="exampleInputPassword1" />
                                     </div>
 
                                     <div className="mb-3 form-check">
-                                        <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-                                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                        <input type="checkbox" className="form-check-input" id="exampleCheck1" />
+                                        <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
 
                                     </div>
 
@@ -46,8 +54,8 @@ const Notes = () => {
 
                 </div>
 
+                <NotesItem />
 
-                <h3 className="my-3">Your notes</h3>
             </div>
 
         </>
