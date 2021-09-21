@@ -1,5 +1,6 @@
 // here we aree basically writing the backend routes to login, register the user and also to get user details 
-//making a user and saving the data in local mongodb date base
+// making a user and saving the data in local mongodb date base
+// we are using express-validator for proper validation such as checking if the email is correct or not
 
 const express = require("express");
 const router = express.Router();
@@ -20,7 +21,7 @@ const secret = "Tamalisagood$oy";
 // while creating the user the username, password must have a proper length, and a proper email
 // if there are errors we return an error
 
-router.post("/createUser", [body("name").isLength({ min: 3 }), body("password").isLength({ min: 5 }), body("email").isEmail()],
+router.post("/register", [body("name").isLength({ min: 3 }), body("password").isLength({ min: 5 }), body("email").isEmail()],
 
 
   async (req, res) => {
@@ -96,7 +97,7 @@ router.post("/createUser", [body("name").isLength({ min: 3 }), body("password").
 // we must check if the email is proper and the password field is not empty
 // if there are errors we return 
 
-router.post("/loginUser", [body("email").isEmail(), body("password").exists()],
+router.post("/login", [body("email").isEmail(), body("password").exists()],
 
   async (req, res) => {
     const errors = validationResult(req);
@@ -123,7 +124,7 @@ router.post("/loginUser", [body("email").isEmail(), body("password").exists()],
       if (!user) {
         return res
           .status(400)
-          .json({ error: "Please try to login with correct credentials" });
+          .json({ error: "User doesnot exsists !!" });
       }
 
 
@@ -157,8 +158,11 @@ router.post("/loginUser", [body("email").isEmail(), body("password").exists()],
   }
 );
 
-//--------------------------------------------------------user details---------------------------------------------------------------------------------------
 
+
+
+//--------------------------------------------------------user details---------------------------------------------------------------------------------------
+// we get the loggedin user's details from here
 router.post("/getUser", fetchUser, async (req, res) => {
   try {
     const userID = req.user.id;

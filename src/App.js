@@ -4,14 +4,17 @@ import Home from './Components/Home';
 import Contact from './Components/Contact';
 import About from './Components/About';
 import NoteState from './Context/Notes/NoteState';
+import Navbar from './Components/Navbar';
 
 
 function App() {
+
   return (
+
     //These are basically routes to different types of pages
     <NoteState>
       <Router>
-
+        <Navbar />
         <Switch>
 
           {/* path 1 */}

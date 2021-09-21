@@ -6,9 +6,10 @@ const { body, validationResult } = require("express-validator");
 
 
 
+
 //``````````````````````````````````````````````Get all the notes````````````````````````````````````````````````````````
 
-//we will be using GET since we need the JWT token from the header
+//we will be using GET since we need the all the notes from the db of a user
 //URL: http://localhost:5000/api/notes/fetchallnotes
 
 
@@ -17,7 +18,8 @@ router.get("/fetchallnotes", fetchUser, async (req, res) => {
   //we will actually get the user details thanks to the middleware !!
 
   try {
-    //here we are fetching all the notes of the logged in user from the database
+    // here we are fetching all the notes of the logged in user from the database
+    // with the help of his id
     const notes = await Notes.find({ user: req.user.id });
     res.json(notes);
   }
@@ -32,14 +34,13 @@ router.get("/fetchallnotes", fetchUser, async (req, res) => {
 //``````````````````````````````````````````````Add notes`````````````````````````````````````````````````````````````````
 //we will be using post method to add notes
 // URL: http://localhost:5000/api/notes/addnote
+// the title of the note and the content must be greater than 3,5
+// we get the details from the frontend and then we save it to the DB
 
 router.post("/addnote", fetchUser,
   [
-    // title of the note must be greater than 3
     body("title", "Enter a valid title").isLength({ min: 3 }),
-
-    // description must be greater than 5
-    body("description", "Enter a valid description").isLength({ min: 5 }),
+    body("description", "Enter a valid description").isLength({ min: 5 })
   ],
 
 
@@ -62,6 +63,7 @@ router.post("/addnote", fetchUser,
       const note = new Notes({ title, description, tag, user: req.user.id });
       const savedNote = await note.save();
       res.json(savedNote);
+
     }
     catch (error) {
       console.log(error.message);
@@ -74,34 +76,37 @@ router.post("/addnote", fetchUser,
 
 
 //``````````````````````````````````````````````Update notes`````````````````````````````````````````````````````````````````
-//we will be using put method to update notes
+// we will be using put method to update notes
+// we also need the id of the note that we want to update
 // URL: http://localhost:5000/api/notes/updatenote/:id
 
 
 router.put("/updatenote/:id", fetchUser, async (req, res) => {
 
-  //get the title des and tag of the note that you want to update and then update it
+  // get the title des and tag of the note that you want to update and then update it
   const { title, description, tag } = req.body;
 
   try {
     const newNote = {};
+
+    // if the user wants to update the title then update it and so on..
     if (title) { newNote.title = title };
     if (description) { newNote.description = description };
     if (tag) { newNote.tag = tag };
 
 
-    //Find the note to be updated and update it
+    // Find the note to be updated 
     let note = await Notes.findById(req.params.id);
 
-    //if note doesnt exist
+    // if note doesnt exist
     if (!note) { return res.status(404).send("NOT FOUND") };
 
 
-    //if id doesnot match, means the person trying to tamper
+    // if id doesnot match, means the person trying to tamper
     if (note.user.toString() !== req.user.id) { return res.status(401).send("NOT ALLOWED") };
 
 
-    //if everything is okay then
+    // if everything is okay then update it
     note = await Notes.findByIdAndUpdate(req.params.id, { $set: newNote }, { new: true });
     res.json({ note });
 
@@ -128,20 +133,23 @@ router.delete("/deletenote/:id", fetchUser, async (req, res) => {
   const { title, description, tag } = req.body;
 
   try {
-    //Find the note to be updated so that you can delete it
+
+    //Find the note to be deleted so that you can delete it
     let note = await Notes.findById(req.params.id);
 
     //if note doesnt exist
     if (!note) { return res.status(404).send("NOT FOUND") };
 
 
-    //if id doesnot match, means the person trying to delete someone else's note
+    // if id doesnot match the current logged in user's id 
+    // means the person trying to delete someone else's note
     if (note.user.toString() !== req.user.id) { return res.status(401).send("NOT ALLOWED") };
 
 
-    //if everything is okay then
+    //if everything is okay then delete it
     note = await Notes.findByIdAndDelete(req.params.id);
     res.json({ "Success": "Note was deleted !!" });
+
   }
   catch (error) {
     console.log(error.message);

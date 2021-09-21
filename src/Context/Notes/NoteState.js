@@ -1,27 +1,16 @@
-import React, { useState } from 'react'
-import noteContext from './NoteContext'
+import React from 'react'
+import NoteContext from './NoteContext'
+
 
 const NoteState = (props) => {
 
-    const s1 = {
-        "name": "Harry",
-        "class": "5b"
-    }
-
-    const [state, setState] = useState(s1);
-
-    const update = () => {
-        setTimeout(() => {
-            setState({
-                "name": "Tamal"
-            })
-        }, 2000);
-    }
-
     return (
-        <noteContext.Provider value={{ state, update }}>
+
+        // when we wrap anything inside the NoteContext the value becomes available to all of it's children
+        // this is done with the help of react context api
+        <NoteContext.Provider value={{}}>
             {props.children}
-        </noteContext.Provider>
+        </NoteContext.Provider>
     )
 }
 
