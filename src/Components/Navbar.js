@@ -1,8 +1,12 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import "../Styles/Navbar.css"
 
 const Navbar = () => {
+
+
+    let location = useLocation();
+
     return (
         <>
             <nav className="navbar  navbar-expand-lg navbar-light">
@@ -21,24 +25,17 @@ const Navbar = () => {
                 <div className="collapse navbar-collapse" id="navtoggle">
                     <ul className="navbar-nav ms-auto">
 
-                        <Link to="/" className="navbar__link">
-                            <div className="page__home">
-                                Home
-                            </div>
-                        </Link>
+                        <li className="nav-item">
+                            <Link className={`nav-link ${location.pathname === "/notes" ? "active" : ""}`} aria-current="page" to="/notes">My notes</Link>
+                        </li>
 
-                        <Link to="/about" className="navbar__link">
-                            <div className="page__about">
-                                About
-                            </div>
-                        </Link>
+                        <li className="nav-item">
+                            <Link className={`nav-link navbar__link ${location.pathname === "/about" ? "active" : ""}`} to="/about">About</Link>
+                        </li>
 
-                        <Link to="/contact" className="navbar__link">
-                            <div className="page__contact">
-                                Contact
-                            </div>
-                        </Link>
-
+                        {/* <li className="nav-item">
+                            <Link className={`nav-link ${location.pathname === "/about" ? "active" : ""}`} to="/">About</Link>
+                        </li> */}
 
                     </ul>
                 </div>
