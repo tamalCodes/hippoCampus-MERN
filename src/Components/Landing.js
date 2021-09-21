@@ -1,3 +1,4 @@
+// login and register buttons here
 import React from 'react'
 
 const Landing = () => {

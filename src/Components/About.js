@@ -1,3 +1,4 @@
+// this is your about page
 import React from 'react'
 
 const About = () => {
