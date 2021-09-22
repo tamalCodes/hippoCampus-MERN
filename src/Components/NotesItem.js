@@ -22,7 +22,8 @@ const NotesItem = () => {
 
                         <div className="card-body">
                             <h5 className="card-title">{note.title}</h5>
-                            <p className="card-text">{note.description}</p>
+                            <span style={{ backgroundColor: "green" }} class="badge badge-pill ">{note.tag} </span>
+                            <p className="card-text my-3">{note.description}</p>
                             <i className="fas fa-trash mx-2"></i>
                             <i className="far fa-edit mx-2"></i>
                         </div>

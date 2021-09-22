@@ -11,10 +11,13 @@ const Notes = () => {
     const { addNote } = context;
 
     const createNote = () => {
-
+        addNote(note.title, note.description, note.tag)
     }
 
-    const onChange = () => {
+    // this is so that whenever we add a note and fill the fields for example title
+    // the state of title gets updated
+    const onChange = (e) => {
+        setNote({ ...note, [e.target.name]: e.target.value })
 
     }
 
@@ -41,6 +44,11 @@ const Notes = () => {
                                         <label htmlFor="title" className="form-label">Title</label>
                                         <input type="text" className="form-control" id="title" name="title" aria-describedby="emailHelp" onChange={onChange} />
 
+                                    </div>
+
+                                    <div className="mb-3">
+                                        <label htmlFor="tag" className="form-label">Tag</label>
+                                        <input type="text" className="form-control" id="tag" name="tag" value={note.tag} onChange={onChange} required />
                                     </div>
 
                                     <div className="mb-3">
