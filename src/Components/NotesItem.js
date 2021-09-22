@@ -7,7 +7,7 @@ import "../Styles/NotesItem.css"
 const NotesItem = () => {
 
     const context = useContext(noteContext);
-    const { notes, setNotes } = context;
+    const { notes } = context;
 
 
     return (

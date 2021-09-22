@@ -1,0 +1,16 @@
+.logo {
+    height: 550px;
+    width: 550px;
+}
+
+.welcome__sec {
+    position: relative;
+    top: 100px;
+    width: 60%;
+    left: 250px;
+}
+
+footer {
+    text-align: center;
+    font-weight: 700;
+}

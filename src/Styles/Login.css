@@ -1,0 +1,14 @@
+.login__img {
+    height: 500px;
+    position: relative;
+    left: 100px;
+    z-index: -1;
+}
+
+
+.login__sec {
+    width: 50%;
+    position: relative;
+    left: 300px;
+    top: 80px;
+}

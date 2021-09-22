@@ -57,11 +57,36 @@ const NoteState = (props) => {
     ]
 
     const [notes, setNotes] = useState(notesInitial)
+
+    // add a note
+    const addNote = (title, description, tag) => {
+        const note = {
+            "_id": "6149ffd7485ce5a05268217f1",
+            "user": "6139bb89a385fb5926c4b386",
+            "title": "Note 5",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it ",
+            "tag": "N-5",
+            "date": "2021-09-21T15:51:16.423Z",
+            "__v": 0
+        };
+        setNotes(notes.push(note))
+    }
+    // edit a note
+    const editNote = () => {
+
+    }
+    // delete a note
+    const deleteNote = (id) => {
+
+    }
+
+
+
     return (
 
         // when we wrap anything inside the NoteContext the value becomes available to all of it's children
         // this is done with the help of react context api
-        <NoteContext.Provider value={{ notes, setNotes }}>
+        <NoteContext.Provider value={{ notes, setNotes, addNote, editNote, deleteNote }}>
             {props.children}
         </NoteContext.Provider>
     )

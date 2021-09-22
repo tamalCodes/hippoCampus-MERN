@@ -5,6 +5,8 @@ import NoteState from './Context/Notes/NoteState';
 import Navbar from './Components/Navbar';
 import Landing from './Components/Landing';
 import Notes from './Components/Notes';
+import Login from './Components/Login';
+import Register from './Components/Register';
 
 
 function App() {
@@ -25,6 +27,12 @@ function App() {
 
           {/* path 3 */}
           <Route exact path="/notes" ><Notes /> </Route>
+
+          {/* path 3 */}
+          <Route exact path="/login" ><Login /> </Route>
+
+          {/* path 3 */}
+          <Route exact path="/signup" ><Register /> </Route>
 
         </Switch>
 
