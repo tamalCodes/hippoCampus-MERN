@@ -4,64 +4,42 @@ import NoteContext from './NoteContext'
 
 const NoteState = (props) => {
 
-    const notesInitial = [
-        {
-            "_id": "613afaf6f40ee42dbc3f3391",
-            "user": "6139bb89a385fb5926c4b386",
-            "title": "Note 1",
-            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it ",
-            "tag": "N-1",
-            "date": "2021-09-10T06:28:06.312Z",
-            "__v": 0
-        },
-        {
-            "_id": "6149ff7485ce5a05268217f1",
-            "user": "6139bb89a385fb5926c4b386",
-            "title": "Note 2",
-            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it ",
-            "tag": "N-2",
-            "date": "2021-09-21T15:51:16.423Z",
-            "__v": 0
-        }
-        ,
-        {
-            "_id": "6149ff7485ce5a05268d217f1",
-            "user": "6139bb89a385fb5926c4b386",
-            "title": "Note 3",
-            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it ",
-            "tag": "N-3",
-            "date": "2021-09-21T15:51:16.423Z",
-            "__v": 0
-        }
-        ,
-        {
-            "_id": "6149ff74d85ce5a05268217f1",
-            "user": "6139bb89a385fb5926c4b386",
-            "title": "Note 4",
-            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it ",
-            "tag": "N-4",
-            "date": "2021-09-21T15:51:16.423Z",
-            "__v": 0
-        }
-        ,
-        {
-            "_id": "6149ffd7485ce5a05268217f1",
-            "user": "6139bb89a385fb5926c4b386",
-            "title": "Note 5",
-            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it ",
-            "tag": "N-5",
-            "date": "2021-09-21T15:51:16.423Z",
-            "__v": 0
-        }
-
-    ]
+    const host = "http://localhost:5000"
+    const notesInitial = []
 
     const [notes, setNotes] = useState(notesInitial)
+
+    // Get all Notes
+    const getNotes = async () => {
+        // API Call 
+        const response = await fetch(`${host}/api/notes/fetchallnotes`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEzOWJiODlhMzg1ZmI1OTI2YzRiMzg2In0sImlhdCI6MTYzMTI1NDkxNn0.LvZyU_spN0jK6iFGxYPKyhBZIKlQdVBNQxrLHs9HUn4"
+            }
+        });
+        const json = await response.json()
+        console.log(json)
+        setNotes(json)
+    }
 
 
     // adds a note
     // the details are from the front end page of Notes.js
-    const addNote = (title, description, tag) => {
+    const addNote = async (title, description, tag) => {
+
+        // API Call 
+        const response = await fetch(`${host}/api/notes/addnote`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEzOWJiODlhMzg1ZmI1OTI2YzRiMzg2In0sImlhdCI6MTYzMTI1NDkxNn0.LvZyU_spN0jK6iFGxYPKyhBZIKlQdVBNQxrLHs9HUn4"
+            },
+            body: JSON.stringify({ title, description, tag })
+        });
+
+
         const note = {
             "_id": "6149ffd7485ce5a05268217f1",
             "user": "6139bb89a385fb5926c4b386",
@@ -77,8 +55,32 @@ const NoteState = (props) => {
 
 
     // edit a note
-    const editNote = (id, title, description, tag) => {
+    const editNote = async (id, title, description, tag) => {
 
+        const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEzOWJiODlhMzg1ZmI1OTI2YzRiMzg2In0sImlhdCI6MTYzMTI1NDkxNn0.LvZyU_spN0jK6iFGxYPKyhBZIKlQdVBNQxrLHs9HUn4"
+            },
+            body: JSON.stringify({ title, description, tag })
+        });
+        const json = await response.json();
+
+        let newNotes = JSON.parse(JSON.stringify(notes))
+
+
+        // Logic to edit in client
+        for (let index = 0; index < notes.length; index++) {
+            const element = notes[index];
+            if (element._id === id) {
+                element.title = title;
+                element.description = description;
+                element.tag = tag;
+            }
+
+        }
+        setNotes(newNotes);
     }
 
 
