@@ -10,7 +10,8 @@ const Notes = () => {
     const context = useContext(noteContext);
     const { addNote } = context;
 
-    const createNote = () => {
+    const createNote = (e) => {
+        e.preventDefault();
         addNote(note.title, note.description, note.tag)
     }
 

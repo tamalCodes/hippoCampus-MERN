@@ -58,26 +58,37 @@ const NoteState = (props) => {
 
     const [notes, setNotes] = useState(notesInitial)
 
-    // add a note
+
+    // adds a note
+    // the details are from the front end page of Notes.js
     const addNote = (title, description, tag) => {
         const note = {
             "_id": "6149ffd7485ce5a05268217f1",
             "user": "6139bb89a385fb5926c4b386",
-            "title": "Note 5",
-            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it ",
-            "tag": "N-5",
+            "title": title,
+            "description": description,
+            "tag": tag,
             "date": "2021-09-21T15:51:16.423Z",
             "__v": 0
         };
-        setNotes(notes.push(note))
+        setNotes(notes.concat(note))
     }
+
+
+
     // edit a note
-    const editNote = () => {
+    const editNote = (id, title, description, tag) => {
 
     }
-    // delete a note
-    const deleteNote = (id) => {
 
+
+
+    // delete a note
+    // we get the id of the note that we want to delete from the frontend and then filter it
+    const deleteNote = (id) => {
+        console.log("Deleted the note with id: " + id);
+        const newNotes = notes.filter((note) => { return note._id !== id });
+        setNotes(newNotes);
     }
 
 
