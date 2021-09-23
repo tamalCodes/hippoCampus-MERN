@@ -9,11 +9,11 @@ import React from 'react';
 // import { useDispatch } from 'react-redux';
 
 // import { likePost, deletePost } from '../../../actions/posts';
-// import useStyles from './styles';
+import useStyles from './styles';
 
 const Post = ({ post, setCurrentId }) => {
     // const dispatch = useDispatch();
-    // const classes = useStyles();
+    const classes = useStyles();
 
     return (
 
