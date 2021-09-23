@@ -8,11 +8,13 @@ export default makeStyles(() => ({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '45px'
+        height: '45px',
+        width: '80%',
+        left: '120px'
     },
     heading: {
         color: 'rgba(0,183,255, 1)',
-        fontFamily: "'Work Sans', sans-serif",
+        fontFamily: ["'Work Sans'", 'sans-serif'].join(','),
         fontSize: "2.5rem"
 
     },
