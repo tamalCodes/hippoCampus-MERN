@@ -1,18 +1,19 @@
-// this is basically the front end for the
+// this is basically the front end for the form on the right side where
 
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
-// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import FileBase from 'react-file-base64';
 
 import useStyles from './styles';
+import { createPost } from '../../actions/posts';
 // import { createPost, updatePost } from '../../actions/posts';
 
 const Form = ({ currentId, setCurrentId }) => {
 
     const [postData, setPostData] = useState({ creator: '', title: '', message: '', tags: '', selectedFile: '' });
     // const post = useSelector((state) => (currentId ? state.posts.find((message) => message._id === currentId) : null));
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     const classes = useStyles();
 
     // useEffect(() => {
@@ -25,7 +26,8 @@ const Form = ({ currentId, setCurrentId }) => {
     };
 
     const handleSubmit = async (e) => {
-        //     e.preventDefault();
+        e.preventDefault();
+        dispatch(createPost(postData));
 
         //     if (currentId === 0) {
         //         dispatch(createPost(postData));
@@ -41,13 +43,15 @@ const Form = ({ currentId, setCurrentId }) => {
 
         <Paper className={classes.paper}>
 
-            <form autoComplete="off" noValidate className={classes.form} onSubmit={handleSubmit}>
+            <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
 
                 <Typography variant="h6">
                     Creating a Memory
                 </Typography>
 
-                <TextField name="creator"
+                <TextField
+                    name="creator"
+                    size="small"
                     variant="outlined"
                     label="Creator"
                     fullWidth
@@ -57,6 +61,7 @@ const Form = ({ currentId, setCurrentId }) => {
 
                 <TextField
                     name="title"
+                    size="small"
                     variant="outlined"
                     label="Title"
                     fullWidth
@@ -66,6 +71,7 @@ const Form = ({ currentId, setCurrentId }) => {
 
                 <TextField
                     name="message"
+                    size="small"
                     variant="outlined"
                     label="Message"
                     fullWidth
@@ -75,6 +81,7 @@ const Form = ({ currentId, setCurrentId }) => {
                 />
 
                 <TextField
+                    size="small"
                     name="tags"
                     variant="outlined"
                     label="Tags (coma separated)"
@@ -91,7 +98,7 @@ const Form = ({ currentId, setCurrentId }) => {
 
                 </div>
 
-                <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>
+                <Button className={classes.buttonSubmit} variant="contained" color="primary" size="small" type="submit" fullWidth>Submit</Button>
 
                 <Button variant="contained" color="secondary" size="small" onClick={clear} fullWidth>Clear</Button>
             </form>

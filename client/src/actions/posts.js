@@ -9,22 +9,26 @@ export const getPosts = () => async (dispatch) => {
     try {
         const { data } = await api.fetchPosts();
 
-        dispatch({ type: 'FETCH_ALL', payload: data });
+        dispatch({ type: '', payload: data });
 
     } catch (error) {
         console.log(error.message);
     }
 };
 
-// export const createPost = (post) => async (dispatch) => {
-//     try {
-//         const { data } = await api.createPost(post);
 
-//         dispatch({ type: CREATE, payload: data });
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// };
+// making a new post
+// the await is making a request to the backend to add the post to the server
+// then we dispatch the 'CREATE' action
+export const createPost = (post) => async (dispatch) => {
+    try {
+        const { data } = await api.createPost(post);
+
+        dispatch({ type: 'CREATE', payload: data });
+    } catch (error) {
+        console.log(error.message);
+    }
+};
 
 // export const updatePost = (id, post) => async (dispatch) => {
 //     try {
