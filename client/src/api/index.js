@@ -1,4 +1,5 @@
-// this is used to called the backend from the client
+// this is used to called the backend from the client side
+// we will be using these in the actions so that we can access the backend and sucessfully work
 
 
 import axios from 'axios';

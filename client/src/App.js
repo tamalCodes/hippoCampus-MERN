@@ -1,14 +1,24 @@
-import React from 'react';
+// dispatch will be used to dispatch an action
+
+import React, { useEffect, useState } from 'react';
 import { Container, AppBar, Typography, Grow, Grid } from '@material-ui/core';
 import memories from './Images/header.png';
 import Posts from './components/Posts/Posts';
 import Form from './components/Form/Form';
 import useStyles from './styles'
+import { useDispatch } from 'react-redux';
+import { getPosts } from './actions/posts';
 
 
 const App = () => {
 
+    const [currentId, setCurrentId] = useState(0);
+    const dispatch = useDispatch();
     const classes = useStyles();
+
+    useEffect(() => {
+        dispatch(getPosts());
+    }, [dispatch]);
 
     return (
         <Container maxWidth="lg">
